@@ -1,0 +1,187 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+    padding: 20px;
+    height: 95vh;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.video-section {
+    background-color: #000;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+#video-player {
+    width: 640px;
+    height: 360px;
+    background: #000;
+    border-radius: 4px;
+}
+
+.json-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: calc(100% - 340px);
+}
+
+.json-panel {
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.inputs-panel {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.json-textarea {
+    flex: 1;
+    font-family: monospace;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+    margin: 10px 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+h2, h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+
+.input-group input[type="color"] {
+    width: 100px;
+    height: 40px;
+    padding: 2px;
+    background: none;
+}
+
+.input-group input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.input-group input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+.input-group input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.placeholder-instance {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.placeholder-header {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.template-buttons {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.template-buttons button {
+    background-color: #2196F3;
+}
+
+.template-buttons button:hover {
+    background-color: #1976D2;
+}
+
+.copy-button {
+    position: relative;
+    background-color: #2196F3;
+}
+
+.copy-button::after {
+    content: "Copied!";
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.copy-button.show-message::after {
+    opacity: 1;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Creator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="video-section">
+                <video id="video-player" controls>
+                    <source src="https://2432eaf2dccf48859f8ea489fd5e0f8f.mediatailor.us-east-1.amazonaws.com/v1/master/7c8ce5ad5bcc5198ca301174a2ead89b25915ca4/stitchtest/index.m3u8" type="application/x-mpegURL">
+                    Your browser does not support HLS video.
+                </video>
+            </div>
+            <div class="json-section">
+                <div class="json-panel">
+                    <h3>Source JSON</h3>
+                    <button onclick="formatJSON()">Format JSON</button>
+                    <textarea id="jsonInput" class="json-textarea"></textarea>
+                    <div id="jsonError" class="error-message"></div>
+                    <div class="template-buttons">
+                        <button onclick="loadTemplate('poll')">Poll</button>
+                        <button onclick="loadTemplate('quiz')">Quiz</button>
+                        <button onclick="loadTemplate('lband')">Lband</button>
+                        <button onclick="loadTemplate('split')">Split Screen</button>
+                        <button onclick="loadTemplate('banner')">Banner</button>
+                    </div>
+                </div>
+                <div class="json-panel">
+                    <h3>Updated JSON</h3>
+                    <button class="copy-button" onclick="copyToClipboard()">Copy to Clipboard</button>
+                    <textarea id="jsonUpdated" class="json-textarea" readonly></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="inputs-panel">
+            <h2>Variables</h2>
+            <div id="dynamicInputs"></div>
+            <button onclick="updateJSON()">Update JSON</button>
+        </div>
+    </div>
+    <script src="templates.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
