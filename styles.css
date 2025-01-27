@@ -185,3 +185,37 @@ button:hover {
 .copy-button.show-message::after {
     opacity: 1;
 }
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.inject-button {
+    position: relative;
+    background-color: #9C27B0;
+}
+
+.inject-button:hover {
+    background-color: #7B1FA2;
+}
+
+.inject-button::after {
+    content: "Injected!";
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.inject-button.show-message::after {
+    opacity: 1;
+}

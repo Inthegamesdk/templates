@@ -184,6 +184,7 @@ function initializeVideoPlayer() {
     const video = document.getElementById('video-player');
     const videoSrc = 'https://2432eaf2dccf48859f8ea489fd5e0f8f.mediatailor.us-east-1.amazonaws.com/v1/master/7c8ce5ad5bcc5198ca301174a2ead89b25915ca4/stitchtest/index.m3u8';
     
+    // Initialize HLS player
     if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(videoSrc);
@@ -191,6 +192,43 @@ function initializeVideoPlayer() {
     }
     else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         video.src = videoSrc;
+    }
+
+    // Initialize InTheGame SDK
+    if (window.inthegame) {
+        window.inthegame.init({
+            videoPlayerId: "video-player",
+            accountId: '6742d3571cc96f979c9bc1d5',
+            clocksMode: 'manual',
+            adsMetadata: [{time: 75,duration: 10}],
+            channelSlug: 'dpgtest'
+        });
+    }
+
+    console.log('InTheGame SDK status:', window.inthegame ? 'loaded' : 'not loaded');
+}
+
+function injectJSON() {
+    const jsonUpdated = document.getElementById('jsonUpdated');
+    try {
+        const jsonData = JSON.parse(jsonUpdated.value);
+        const stringifiedJson = JSON.stringify(jsonData);
+        console.log('Attempting to inject JSON:', stringifiedJson);
+        
+        if (window.inthegame && window.inthegame.injectFlexi) {
+            window.inthegame.injectFlexi(stringifiedJson);
+            
+            const button = document.querySelector('.inject-button');
+            button.classList.add('show-message');
+            
+            setTimeout(() => {
+                button.classList.remove('show-message');
+            }, 2000);
+        } else {
+            console.error('InTheGame SDK not loaded or injectFlexi not available');
+        }
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
     }
 }
 
