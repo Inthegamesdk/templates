@@ -227,3 +227,9 @@ button:hover {
 .inject-button.show-message::after {
     opacity: 1;
 }
+
+.placeholder-instance.updated {
+    background-color: #e8f5e9;
+    border: 1px solid #81c784;
+    transition: background-color 0.3s ease;
+}

@@ -88,6 +88,13 @@ function createInputFields() {
             input.value = placeholder.currentValue;
         }
 
+        // Add event listeners for input changes
+        if (input.type === 'color') {
+            input.addEventListener('change', handleInputChange);
+        } else {
+            input.addEventListener('focusout', handleInputChange);
+        }
+
         instanceDiv.appendChild(header);
         inputGroup.appendChild(label);
         inputGroup.appendChild(input);
@@ -108,6 +115,15 @@ function updateJSON() {
             } else {
                 setValueByPath(window.jsonData, path, value);
             }
+            
+            // Add highlight effect
+            const placeholderInstance = input.closest('.placeholder-instance');
+            placeholderInstance.classList.add('updated');
+            
+            // Remove highlight after 1.5 seconds
+            setTimeout(() => {
+                placeholderInstance.classList.remove('updated');
+            }, 1500);
         }
     });
 
@@ -165,6 +181,11 @@ async function loadTemplate(templateName) {
         jsonUpdated.value = formattedJson;
         
         errorElement.textContent = '';
+        
+        // Clear all highlights before creating new input fields
+        const existingHighlights = document.querySelectorAll('.placeholder-instance.updated');
+        existingHighlights.forEach(el => el.classList.remove('updated'));
+        
         createInputFields();
 
     } catch (error) {
@@ -235,6 +256,29 @@ function injectJSON() {
         }
     } catch (error) {
         console.error('Error parsing JSON:', error);
+    }
+}
+
+// Add this new function to handle input changes
+function handleInputChange(event) {
+    const input = event.target;
+    const path = input.dataset.path;
+    const value = input.value;
+    
+    if (value) {
+        if (input.dataset.isNamed === 'true') {
+            setValueByPath(window.jsonData, path, value);
+        } else {
+            setValueByPath(window.jsonData, path, value);
+        }
+        
+        // Add highlight effect without removing it
+        const placeholderInstance = input.closest('.placeholder-instance');
+        placeholderInstance.classList.add('updated');
+
+        // Update the JSON in the Updated JSON box
+        const formattedJson = JSON.stringify(window.jsonData, null, 2);
+        document.getElementById('jsonUpdated').value = formattedJson;
     }
 }
 
