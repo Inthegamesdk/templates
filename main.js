@@ -144,6 +144,7 @@ function formatJSON() {
 async function loadTemplate(templateName) {
     const url = window.templates[templateName];
     const jsonInput = document.getElementById('jsonInput');
+    const jsonUpdated = document.getElementById('jsonUpdated');
     const errorElement = document.getElementById('jsonError');
 
     try {
@@ -157,7 +158,12 @@ async function loadTemplate(templateName) {
         
         const data = await response.json();
         window.jsonData = data;
-        jsonInput.value = JSON.stringify(data, null, 2);
+        const formattedJson = JSON.stringify(data, null, 2);
+        
+        // Update both textareas
+        jsonInput.value = formattedJson;
+        jsonUpdated.value = formattedJson;
+        
         errorElement.textContent = '';
         createInputFields();
 
