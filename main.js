@@ -282,7 +282,41 @@ function handleInputChange(event) {
     }
 }
 
+function getClientFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('client') || 'default';
+}
+
+function loadClientTemplates() {
+    const client = getClientFromURL();
+    const scriptElement = document.getElementById('client-templates');
+    scriptElement.src = `templates/${client}.js`;
+    
+    scriptElement.onload = () => {
+        window.templates = window.clientTemplates;
+        updateTemplateButtons();
+    };
+    
+    scriptElement.onerror = () => {
+        console.error('Error loading client templates, falling back to default');
+        scriptElement.src = 'templates/default.js';
+    };
+}
+
+function updateTemplateButtons() {
+    const templateButtonsContainer = document.querySelector('.template-buttons');
+    templateButtonsContainer.innerHTML = '';
+    
+    Object.keys(window.templates).forEach(templateName => {
+        const button = document.createElement('button');
+        button.textContent = templateName;
+        button.onclick = () => loadTemplate(templateName);
+        templateButtonsContainer.appendChild(button);
+    });
+}
+
 window.onload = function() {
+    loadClientTemplates();
     const formattedJson = JSON.stringify(window.jsonData, null, 2);
     document.getElementById('jsonInput').value = formattedJson;
     document.getElementById('jsonUpdated').value = formattedJson;
