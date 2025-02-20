@@ -51,8 +51,7 @@ function createInputFields() {
         header.className = 'placeholder-header';
         const pathParts = placeholder.path.split('.');
         const mainPath = pathParts[pathParts.length - 1];
-        const fullPath = placeholder.path;
-        header.innerHTML = `${mainPath}<br><span style="font-size: 11px; color: #888;">Path: ${fullPath}</span>`;
+        header.textContent = mainPath;
         
         const inputGroup = document.createElement('div');
         inputGroup.className = 'input-group';
@@ -88,7 +87,6 @@ function createInputFields() {
             input.value = placeholder.currentValue;
         }
 
-        // Add event listeners for input changes
         if (input.type === 'color') {
             input.addEventListener('change', handleInputChange);
         } else {
