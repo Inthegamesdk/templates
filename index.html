@@ -11,11 +11,10 @@
     id="inthegame-script"
     src="https://html5.inthegame.io/v2-3/main.js"
   ></script>
-
 </head>
 <body>
     <div class="container">
-        <div class="main-content">
+        <div class="column column-1">
             <div class="video-section">
                 <div class="video-container">
                     <video id="video-player" controls>
@@ -24,29 +23,35 @@
                     </video>
                 </div>
             </div>
-            <div class="json-section">
-                <div class="json-panel">
-                    <h3>Source JSON</h3>
-                    <button onclick="formatJSON()">Format JSON</button>
-                    <textarea id="jsonInput" class="json-textarea"></textarea>
-                    <div id="jsonError" class="error-message"></div>
-                    <div class="template-buttons">
-                    </div>
+            <div class="source-code-section">
+                <div class="code-header">
+                    <h3>Source code</h3>
+                    <select id="template-select" class="template-select">
+                        <option value="">Template</option>
+                    </select>
                 </div>
-                <div class="json-panel">
-                    <h3>Updated JSON</h3>
-                    <div class="button-group">
-                        <button class="copy-button" onclick="copyToClipboard()">Copy to Clipboard</button>
-                        <button class="inject-button" onclick="injectJSON()">Inject to Player</button>
-                    </div>
-                    <textarea id="jsonUpdated" class="json-textarea" readonly></textarea>
-                </div>
+                <textarea id="jsonInput" class="json-textarea"></textarea>
+                <div id="jsonError" class="error-message"></div>
             </div>
         </div>
-        <div class="inputs-panel">
-            <h2>Variables</h2>
-            <div id="dynamicInputs"></div>
+        <div class="column column-2">
+            <div class="output-code-section">
+                <div class="code-header">
+                    <h3>Output code</h3>
+                    <button class="copy-icon" onclick="copyToClipboard()">Copy</button>
+                </div>
+                <textarea id="jsonUpdated" class="json-textarea" readonly></textarea>
+            </div>
         </div>
+        <div class="column column-3">
+            <div class="variables-section">
+                <h2>Variables</h2>
+                <div id="dynamicInputs"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <button id="inject-button" class="inject-preview-button" onclick="injectJSON()">Preview</button>
     </div>
     <script id="client-templates"></script>
     <script src="main.js"></script>

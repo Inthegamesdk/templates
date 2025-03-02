@@ -1,81 +1,162 @@
-.container {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 20px;
-    padding: 20px;
-    height: 95vh;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    background-color: #333;
 }
 
-.main-content {
+.container {
+    display: grid;
+    grid-template-columns: 1.5fr 0.75fr 0.75fr;
+    gap: 10px;
+    height: calc(100vh - 5px);
+    padding: 0 5px;
+}
+
+.column {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    height: 100%;
+    margin: 0 5px;
+}
+
+.column-1 {
+    display: flex;
+    flex-direction: column;
 }
 
 .video-section {
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    padding: 20px;
+    background-color: #000;
+    height: auto;
+    margin-bottom: 10px;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .video-container {
-    width: 640px;
-    height: 360px;
-    background: #000;
-    border-radius: 4px;
     position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) */
+    overflow: hidden;
 }
 
 #video-player {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: #000;
-    border-radius: 4px;
 }
 
-.json-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    height: calc(100% - 340px);
-}
-
-.json-panel {
+.source-code-section {
     display: flex;
     flex-direction: column;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    padding: 15px;
+    background-color: #222;
+    height: 50%;
 }
 
-.inputs-panel {
+.output-code-section {
+    display: flex;
+    flex-direction: column;
+    background-color: #222;
+    height: 100%;
+}
+
+.variables-section {
     background-color: #f5f5f5;
-    border-radius: 5px;
+    height: 100%;
     padding: 20px;
     overflow-y: auto;
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #666;
+    padding: 10px;
+}
+
+.code-header h3 {
+    margin: 0;
+    color: white;
+}
+
+.template-select {
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    color: #333;
+    border: none;
+    border-radius: 0;
+}
+
+.copy-icon {
+    background-color: #f5f5f5;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
 }
 
 .json-textarea {
     flex: 1;
     font-family: monospace;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: none;
     resize: none;
-    margin: 10px 0;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow-x: auto;
-    white-space: pre;
+    margin: 0;
+    background-color: #222;
+    color: white;
+    overflow-y: auto;
 }
 
-h2, h3 {
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #333;
+    display: flex;
+}
+
+.inject-preview-button {
+    width: 100%;
+    height: 100%;
+    background-color: #6a5acd;
+    color: white;
+    border: none;
+    text-transform: lowercase;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.inject-preview-button:hover {
+    background-color: #4CAF50; /* Green color on hover */
+}
+
+.inject-preview-button:active {
+    background-color: #888; /* Gray color when clicked */
+}
+
+.error-message {
+    color: red;
+    padding: 5px 10px;
+    background-color: #222;
+}
+
+h2 {
     margin-top: 0;
-    margin-bottom: 15px;
+    text-align: center;
 }
 
 .input-group {
@@ -92,140 +173,33 @@ h2, h3 {
 
 .input-group input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 0;
     margin-bottom: 5px;
     box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.input-group input[type="color"] {
-    width: 100px;
-    height: 40px;
-    padding: 2px;
-    background: none;
-}
-
-.input-group input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 0;
-}
-
-.input-group input[type="color"]::-webkit-color-swatch {
-    border: none;
-    border-radius: 4px;
-}
-
-.input-group input[type="color"]::-moz-color-swatch {
-    border: none;
-    border-radius: 4px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-.error-message {
-    color: red;
-    margin-top: 10px;
+.input-group input:focus {
+    white-space: normal;
+    overflow: visible;
 }
 
 .placeholder-instance {
     background-color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 0;
     border: 1px solid #ddd;
-    max-width: 100%;
-    box-sizing: border-box;
 }
 
 .placeholder-header {
     font-size: 12px;
     color: #666;
     margin-bottom: 5px;
-}
-
-.template-buttons {
-    margin-top: 10px;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
-
-.template-buttons button {
-    background-color: #2196F3;
-}
-
-.template-buttons button:hover {
-    background-color: #1976D2;
-}
-
-.copy-button {
-    position: relative;
-    background-color: #2196F3;
-}
-
-.copy-button::after {
-    content: "Copied!";
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.copy-button.show-message::after {
-    opacity: 1;
-}
-
-.button-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.inject-button {
-    position: relative;
-    background-color: #9C27B0;
-}
-
-.inject-button:hover {
-    background-color: #7B1FA2;
-}
-
-.inject-button::after {
-    content: "Injected!";
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.inject-button.show-message::after {
-    opacity: 1;
 }
 
 .placeholder-instance.updated {

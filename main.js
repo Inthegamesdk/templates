@@ -186,6 +186,9 @@ async function loadTemplate(templateName) {
         
         createInputFields();
 
+        // Add a function to clear the undefined text
+        clearUndefinedText();
+
     } catch (error) {
         errorElement.textContent = `Error loading template: ${error.message}`;
         errorElement.style.color = 'red';
@@ -302,22 +305,44 @@ function loadClientTemplates() {
 }
 
 function updateTemplateButtons() {
-    const templateButtonsContainer = document.querySelector('.template-buttons');
-    templateButtonsContainer.innerHTML = '';
+    const templateSelect = document.getElementById('template-select');
+    templateSelect.innerHTML = '<option value="">Template</option>';
     
+    // Add options for each template
     Object.keys(window.templates).forEach(templateName => {
-        const button = document.createElement('button');
-        button.textContent = templateName;
-        button.onclick = () => loadTemplate(templateName);
-        templateButtonsContainer.appendChild(button);
+        const option = document.createElement('option');
+        option.textContent = templateName;
+        option.value = templateName;
+        templateSelect.appendChild(option);
+    });
+    
+    // Add change event listener
+    templateSelect.addEventListener('change', (e) => {
+        if (e.target.value) {
+            loadTemplate(e.target.value);
+        }
     });
 }
 
 window.onload = function() {
     loadClientTemplates();
-    const formattedJson = JSON.stringify(window.jsonData, null, 2);
-    document.getElementById('jsonInput').value = formattedJson;
-    document.getElementById('jsonUpdated').value = formattedJson;
+    
+    // Initialize with empty strings instead of undefined
+    document.getElementById('jsonInput').value = window.jsonData ? 
+        JSON.stringify(window.jsonData, null, 2) : '';
+    document.getElementById('jsonUpdated').value = window.jsonData ? 
+        JSON.stringify(window.jsonData, null, 2) : '';
+    
     createInputFields();
     initializeVideoPlayer();
 };
+
+// Add a function to clear the undefined text
+function clearUndefinedText() {
+    const textareas = document.querySelectorAll('.json-textarea');
+    textareas.forEach(textarea => {
+        if (textarea.value === 'undefined') {
+            textarea.value = '';
+        }
+    });
+}
