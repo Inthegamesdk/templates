@@ -4,14 +4,17 @@ function findPlaceholdersWithPaths(obj, path = '', results = []) {
         if (typeof obj[key] === 'object' && obj[key] !== null) {
             findPlaceholdersWithPaths(obj[key], newPath, results);
         } else if (typeof obj[key] === 'string') {
-            const namedMatch = obj[key].match(/\[\['(.*?)',\s*([^\]]*?)\]\]/);
+            const namedMatch = obj[key].match(/\[\['(.*?)',\s*([^\]]*?)(?:,\s*'(.*?)')?(?:,\s*'(.*?)')?\]\]/);
             if (namedMatch) {
+                console.log(namedMatch);
                 results.push({
                     placeholder: obj[key],
                     path: newPath,
                     currentValue: obj[key],
                     name: namedMatch[1],
-                    type: namedMatch[2]
+                    type: namedMatch[2],
+                    section: namedMatch[3] || null,
+                    defaultValue: namedMatch[4] || null
                 });
             } else {
                 const match = obj[key].match(/\[\[(.*?)\]\]/);
@@ -105,7 +108,7 @@ function createPlaceholderInput(placeholder, index, container) {
         // Extract the actual value if it's in the placeholder format
         const namedMatch = placeholder.currentValue.match(/\[\['(.*?)',\s*([^\]]*?)(?:,\s*'(.*?)')?(?:,\s*'(.*?)')?\]\]/);
         if (namedMatch && namedMatch[4]) {
-            input.value = namedMatch[4];
+            input.value = namedMatch[4]; // Use the default value from the placeholder
         } else {
             input.value = placeholder.currentValue;
         }
@@ -185,7 +188,6 @@ async function loadTemplate(templateName) {
     const jsonInput = document.getElementById('jsonInput');
     const jsonUpdated = document.getElementById('jsonUpdated');
     const errorElement = document.getElementById('jsonError');
-
     try {
         errorElement.textContent = 'Loading...';
         errorElement.style.color = '#666';
@@ -213,6 +215,9 @@ async function loadTemplate(templateName) {
 
         // Add a function to clear the undefined text
         clearUndefinedText();
+        
+        // Update JSON after loading template and creating input fields
+        updateJSONAfterLoad();
 
     } catch (error) {
         errorElement.textContent = `Error loading template: ${error.message}`;
@@ -370,4 +375,24 @@ function clearUndefinedText() {
             textarea.value = '';
         }
     });
+}
+
+function updateJSONAfterLoad() {
+    // Get all inputs from the dynamic inputs container
+    const inputs = document.querySelectorAll('#dynamicInputs input');
+    
+    // Process each input to update the JSON
+    inputs.forEach(input => {
+        const path = input.dataset.path;
+        const value = input.value;
+        
+        if (value) {
+            // Update the JSON data with the input value
+            setValueByPath(window.jsonData, path, value);
+        }
+    });
+    
+    // Update the JSON in the output textarea
+    const formattedJson = JSON.stringify(window.jsonData, null, 2);
+    document.getElementById('jsonUpdated').value = formattedJson;
 }
