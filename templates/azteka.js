@@ -4,5 +4,5 @@ window.clientTemplates = {
     splitscreen: 'https://assets.internal.inthegame.io/templates/azteka/splitscreen_azteka.json',
     quiz_web: 'https://assets.internal.inthegame.io/templates/azteka/azteka_quiz_web.json',
     quiz_web_correct: 'https://assets.internal.inthegame.io/templates/azteka/azteka_quiz_web_correct.json',
-    quiz_web_incorrect: 'https://assets.internal.inthegame.io/templates/azteka/azteka_quiz_web_incorrect'
+    quiz_web_incorrect: 'https://assets.internal.inthegame.io/templates/azteka/azteka_quiz_web_incorrect.json'
 }; 
