@@ -221,3 +221,17 @@ h2 {
     overflow-y: auto;
     flex: 1;
 }
+
+.section-header {
+    background-color: #e0e0e0;
+    padding: 8px 15px;
+    margin: 10px 0;
+    font-weight: bold;
+    border-left: 4px solid #6a5acd;
+}
+
+.section-separator {
+    height: 1px;
+    background-color: #ddd;
+    margin: 15px 0;
+}

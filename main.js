@@ -46,9 +46,56 @@ function createInputFields() {
     const inputsContainer = document.getElementById('dynamicInputs');
     inputsContainer.innerHTML = '';
 
-    placeholders.forEach((placeholder, index) => {
-        createPlaceholderInput(placeholder, index, inputsContainer);
+    // Group placeholders by section
+    const sectionMap = {};
+    const noSectionPlaceholders = [];
+
+    placeholders.forEach(placeholder => {
+        if (placeholder.section) {
+            if (!sectionMap[placeholder.section]) {
+                sectionMap[placeholder.section] = [];
+            }
+            sectionMap[placeholder.section].push(placeholder);
+        } else {
+            noSectionPlaceholders.push(placeholder);
+        }
     });
+
+    // Create inputs for each section
+    Object.keys(sectionMap).forEach(sectionName => {
+        // Create section header
+        const sectionHeader = document.createElement('div');
+        sectionHeader.className = 'section-header';
+        sectionHeader.textContent = sectionName;
+        inputsContainer.appendChild(sectionHeader);
+
+        // Create inputs for this section
+        sectionMap[sectionName].forEach((placeholder, index) => {
+            createPlaceholderInput(placeholder, index, inputsContainer);
+        });
+    });
+
+    // Add a separator if we have both sectioned and non-sectioned placeholders
+    if (Object.keys(sectionMap).length > 0 && noSectionPlaceholders.length > 0) {
+        const separator = document.createElement('div');
+        separator.className = 'section-separator';
+        inputsContainer.appendChild(separator);
+    }
+
+    // Create inputs for placeholders without a section
+    if (noSectionPlaceholders.length > 0) {
+        // Only add "General" header if we have sections above
+        if (Object.keys(sectionMap).length > 0) {
+            const generalHeader = document.createElement('div');
+            generalHeader.className = 'section-header';
+            generalHeader.textContent = 'General';
+            inputsContainer.appendChild(generalHeader);
+        }
+
+        noSectionPlaceholders.forEach((placeholder, index) => {
+            createPlaceholderInput(placeholder, index, inputsContainer);
+        });
+    }
 }
 
 function createPlaceholderInput(placeholder, index, container) {
