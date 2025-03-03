@@ -44,61 +44,86 @@ function createInputFields() {
     inputsContainer.innerHTML = '';
 
     placeholders.forEach((placeholder, index) => {
-        const instanceDiv = document.createElement('div');
-        instanceDiv.className = 'placeholder-instance';
+        createPlaceholderInput(placeholder, index, inputsContainer);
+    });
+}
 
-        const header = document.createElement('div');
-        header.className = 'placeholder-header';
-        const pathParts = placeholder.path.split('.');
-        const mainPath = pathParts[pathParts.length - 1];
-        header.textContent = mainPath;
+function createPlaceholderInput(placeholder, index, container) {
+    const instanceDiv = document.createElement('div');
+    instanceDiv.className = 'placeholder-instance';
+
+    const header = document.createElement('div');
+    header.className = 'placeholder-header';
+    const pathParts = placeholder.path.split('.');
+    const mainPath = pathParts[pathParts.length - 1];
+    
+    // Remove the header text completely to eliminate the type label
+    // header.textContent = mainPath;
+    
+    const inputGroup = document.createElement('div');
+    inputGroup.className = 'input-group';
+
+    // Create a cleaner label text without the extra information
+    let labelText;
+    if (placeholder.name) {
+        labelText = `${placeholder.name}:`;
+    } else {
+        labelText = `${placeholder.placeholder}:`;
+    }
+
+    const label = document.createElement('label');
+    label.textContent = labelText;
+
+    const input = document.createElement('input');
+    input.id = `input-${index}`;
+    input.dataset.path = placeholder.path;
+    
+    if (placeholder.type === 'COLOR') {
+        input.type = 'color';
+    } else if (placeholder.type === 'URL') {
+        input.type = 'url';
+        input.placeholder = 'Enter URL';
+    } else {
+        input.type = 'text';
+        input.placeholder = 'Enter value';
+    }
+
+    if (placeholder.name) {
+        input.dataset.isNamed = 'true';
+        input.dataset.name = placeholder.name;
+        input.dataset.type = placeholder.type;
         
-        const inputGroup = document.createElement('div');
-        inputGroup.className = 'input-group';
+        if (placeholder.section) {
+            input.dataset.section = placeholder.section;
+        }
+    }
 
-        const labelText = placeholder.name 
-            ? `${placeholder.name} (${placeholder.type}):`
-            : `${placeholder.placeholder}:`;
-
-        const label = document.createElement('label');
-        label.textContent = labelText;
-
-        const input = document.createElement('input');
-        input.id = `input-${index}`;
-        input.dataset.path = placeholder.path;
-        
-        if (placeholder.type === 'COLOR') {
-            input.type = 'color';
-        } else if (placeholder.type === 'URL') {
-            input.type = 'url';
-            input.placeholder = 'Enter URL';
+    // Set the input value based on the current value
+    if (placeholder.defaultValue) {
+        input.value = placeholder.defaultValue;
+    } else if (placeholder.currentValue !== placeholder.placeholder) {
+        // Extract the actual value if it's in the placeholder format
+        const namedMatch = placeholder.currentValue.match(/\[\['(.*?)',\s*([^\]]*?)(?:,\s*'(.*?)')?(?:,\s*'(.*?)')?\]\]/);
+        if (namedMatch && namedMatch[4]) {
+            input.value = namedMatch[4];
         } else {
-            input.type = 'text';
-            input.placeholder = 'Enter value';
-        }
-
-        if (placeholder.name) {
-            input.dataset.isNamed = 'true';
-            input.dataset.name = placeholder.name;
-            input.dataset.type = placeholder.type;
-        }
-
-        if (placeholder.currentValue !== placeholder.placeholder) {
             input.value = placeholder.currentValue;
         }
+    }
 
-        if (input.type === 'color') {
-            input.addEventListener('change', handleInputChange);
-        } else {
-            input.addEventListener('focusout', handleInputChange);
-        }
+    if (input.type === 'color') {
+        input.addEventListener('change', handleInputChange);
+    } else {
+        input.addEventListener('focusout', handleInputChange);
+    }
 
-        instanceDiv.appendChild(header);
-        inputGroup.appendChild(label);
-        inputGroup.appendChild(input);
-        instanceDiv.appendChild(inputGroup);
-        inputsContainer.appendChild(instanceDiv);
-    });
+    // Only append the header if we want to show it (currently commented out)
+    // instanceDiv.appendChild(header);
+    
+    inputGroup.appendChild(label);
+    inputGroup.appendChild(input);
+    instanceDiv.appendChild(inputGroup);
+    container.appendChild(instanceDiv);
 }
 
 function updateJSON() {
