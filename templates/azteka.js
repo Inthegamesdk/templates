@@ -6,6 +6,7 @@ window.clientTemplates = {
     unique_feedback_28_03_25: 'https://assets.internal.inthegame.io/templates/azteka/unique_feedback_28_03_25.json',
     correct_feedback_28_03_25: 'https://assets.internal.inthegame.io/templates/azteka/correct_feedback_28_03_25.json',
     incorrect_feedback_28_03_25: 'https://assets.internal.inthegame.io/templates/azteka/incorrect_feedback_28_03_25.json',
+    lband_test: 'https://assets.internal.inthegame.io/templates/azteka/lband_test',
     sidebar_video: 'https://assets.internal.inthegame.io/templates/azteka/sidebar_video_azteka.json',
     lband: 'https://assets.internal.inthegame.io/templates/azteka/lband_azteka.json',
     splitscreen: 'https://assets.internal.inthegame.io/templates/azteka/splitscreen_azteka.json',
