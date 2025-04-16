@@ -5,13 +5,8 @@ window.clientTemplates = {
     lower_third_poll: 'https://assets.internal.inthegame.io/templates/FT/ft_lower_third_text_images.json',
     lower_third_feedback: 'https://assets.internal.inthegame.io/templates/FT/feedback_lower_third_text_images.json',
     product_lband: 'https://assets.internal.inthegame.io/templates/FT/lband_product.json',
-    split_screen: 'https://assets.internal.inthegame.io/templates/FT/splitscreen.json',
-    pinkfong_poll: 'https://assets.internal.inthegame.io/templates/FT/lower_pinkfong.json',
-    pinkfong_feedback: 'https://assets.internal.inthegame.io/templates/FT/lower_pinkfong_feedback.json',
-    happykids_poll: 'https://assets.internal.inthegame.io/templates/FT/poll_lower_happykids.json',
-    happykids_feedback: 'https://assets.internal.inthegame.io/templates/FT/happykids_poll_feedback.json',
-    fawesome_poll: 'https://assets.internal.inthegame.io/templates/FT/poll_lower_fawsome.json',
-    fawesome_feedback: 'https://assets.internal.inthegame.io/templates/FT/fawsome_poll_feedback.json'
+    split_screen: 'https://assets.internal.inthegame.io/templates/FT/splitscreen.json'
+  
 }; 
 
 
