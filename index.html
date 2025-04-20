@@ -55,5 +55,39 @@
     </div>
     <script id="client-templates"></script>
     <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoPlayer = document.getElementById('video-player');
+            
+            // Function to set video to 10 seconds and pause
+            function setVideoPosition() {
+                videoPlayer.currentTime = 10;
+                videoPlayer.pause();
+            }
+            
+            // For HLS videos using hls.js
+            if(Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(videoPlayer.querySelector('source').src);
+                hls.attachMedia(videoPlayer);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    // Once manifest is loaded, set the position and pause
+                    videoPlayer.addEventListener('loadedmetadata', setVideoPosition);
+                });
+            } 
+            // For browsers with native HLS support
+            else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                videoPlayer.addEventListener('loadedmetadata', setVideoPosition);
+            }
+            
+            // Additional safeguard to ensure video is at 10 seconds and paused
+            videoPlayer.addEventListener('play', function() {
+                // Only enforce our position if it's the initial play
+                if (videoPlayer.currentTime < 10) {
+                    setVideoPosition();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
