@@ -383,7 +383,7 @@ function loadClientTemplates() {
 
 function updateTemplateButtons() {
     const templateSelect = document.getElementById('template-select');
-    templateSelect.innerHTML = '<option value="">Template</option>';
+    templateSelect.innerHTML = '<option value="">Select Template</option>';
     
     // Add options for each template
     Object.keys(window.templates).forEach(templateName => {
