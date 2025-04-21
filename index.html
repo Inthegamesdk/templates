@@ -26,9 +26,11 @@
             <div class="source-code-section">
                 <div class="code-header">
                     <h3>Source code</h3>
-                    <select id="template-select" class="template-select">
-                        <option value="">Template</option>
-                    </select>
+                    <div class="buttons">
+                        <select id="template-select" class="template-select">
+                            <option value="">Template</option>
+                        </select>
+                    </div>
                 </div>
                 <textarea id="jsonInput" class="json-textarea"></textarea>
                 <div id="jsonError" class="error-message"></div>
@@ -38,7 +40,10 @@
             <div class="output-code-section">
                 <div class="code-header">
                     <h3>Output code</h3>
-                    <button class="copy-icon" onclick="copyToClipboard()">Copy</button>
+                    <div class="buttons">
+                        <button class="copy-icon" onclick="copyToClipboard()">Copy</button>
+                        <button class="download-icon" onclick="downloadJSON()">Download</button>
+                    </div>
                 </div>
                 <textarea id="jsonUpdated" class="json-textarea" readonly></textarea>
             </div>
@@ -88,6 +93,24 @@
                 }
             });
         });
+
+        function downloadJSON() {
+            const jsonContent = document.getElementById('jsonUpdated').value;
+            if (!jsonContent.trim()) {
+                alert('No content to download');
+                return;
+            }
+            
+            const blob = new Blob([jsonContent], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'flexi.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
     </script>
 </body>
 </html>
