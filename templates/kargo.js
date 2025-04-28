@@ -4,6 +4,5 @@ window.clientTemplates = {
     full_screen_ad: 'https://assets.internal.inthegame.io/templates/kargo/kargo_full.json',
     right_side_ad: 'https://assets.internal.inthegame.io/templates/kargo/kargo_side.json',
     left_side_ad: 'https://assets.internal.inthegame.io/templates/kargo/karo_left_side.json',
-    lower_third_animation: 'https://assets.internal.inthegame.io/templates/general/lower_third_animation.json',
     left_side_animation: 'https://assets.internal.inthegame.io/templates/general/left_side_animation.json'
 }; 
