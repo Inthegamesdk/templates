@@ -316,8 +316,44 @@ function initializeVideoPlayer() {
 function check403Error() {
     console.log('Starting 403 error check...');
     let attempts = 0;
-    const maxAttempts = 10;
+    const initialAttempts = 10; // Initial check period
+    const maxAttempts = 60; // Maximum check period if 403 is found
     const interval = 1000; // 1 second
+    let found403 = false;
+
+    // Get button and store original styles
+    const button = document.querySelector('#inject-button');
+    const originalText = button.textContent;
+    const originalColor = '#6a5acd';
+
+    function updateButtonProcessing() {
+        button.style.backgroundColor = '#888';
+        button.textContent = 'Processing';
+        button.disabled = true;
+    }
+
+    function resetButton() {
+        button.style.backgroundColor = originalColor;
+        button.textContent = originalText;
+        button.disabled = false;
+    }
+
+    function showTranscodingError() {
+        const variablesSection = document.querySelector('.variables-section');
+        const errorDiv = document.createElement('div');
+        errorDiv.style.color = 'red';
+        errorDiv.style.padding = '10px';
+        errorDiv.style.textAlign = 'center';
+        errorDiv.style.borderTop = '1px solid #ddd';
+        errorDiv.textContent = 'Transcoding failed, please try again or replace video';
+        variablesSection.appendChild(errorDiv);
+    }
+
+    function cleanup() {
+        window.fetch = originalFetch;
+        window.XMLHttpRequest = originalXHR;
+        clearInterval(checkInterval);
+    }
 
     // Store original fetch and XHR
     const originalFetch = window.fetch;
@@ -326,14 +362,20 @@ function check403Error() {
     // Intercept fetch requests
     window.fetch = async function(...args) {
         const url = args[0];
-        console.log('Intercepted fetch request to:', url);
         
         if (typeof url === 'string' && url.includes('stream.inthegame.io')) {
             try {
                 const response = await originalFetch.apply(this, args);
                 console.log('Fetch response status for', url, ':', response.status);
+                
                 if (response.status === 403) {
-                    console.error('403 error detected (fetch) for:', url);
+                    found403 = true;
+                    updateButtonProcessing();
+                } else if (response.status === 200 && found403) {
+                    resetButton();
+                    cleanup();
+                    console.log('Successfully recovered from 403');
+                    return response;
                 }
                 return response;
             } catch (error) {
@@ -351,15 +393,17 @@ function check403Error() {
         
         xhr.open = function(...args) {
             const url = args[1];
-            console.log('Intercepted XHR request to:', url);
             
             if (url && url.includes('stream.inthegame.io')) {
                 xhr.addEventListener('loadend', function() {
                     console.log('XHR response status for', url, ':', this.status);
                     if (this.status === 403) {
-                        console.error('403 error detected (XHR) for:', url);
-                    } else {
-                        console.log('No 403 error detected for:', url);
+                        found403 = true;
+                        updateButtonProcessing();
+                    } else if (this.status === 200 && found403) {
+                        resetButton();
+                        cleanup();
+                        console.log('Successfully recovered from 403');
                     }
                 });
             }
@@ -371,14 +415,21 @@ function check403Error() {
 
     const checkInterval = setInterval(() => {
         attempts++;
-        console.log(`403 check attempt ${attempts}/${maxAttempts}`);
+        console.log(`403 check attempt ${attempts}/${found403 ? maxAttempts : initialAttempts}`);
         
-        if (attempts >= maxAttempts) {
-            clearInterval(checkInterval);
-            // Reset both fetch and XHR to original after we're done checking
-            window.fetch = originalFetch;
-            window.XMLHttpRequest = originalXHR;
-            console.log('Finished checking for 403 errors');
+        // Stop checking if we haven't found 403 after initial attempts
+        if (!found403 && attempts >= initialAttempts) {
+            console.log('No 403 errors detected after initial check period, stopping checks');
+            cleanup();
+            return;
+        }
+        
+        // Continue checking up to maxAttempts if we found 403
+        if (found403 && attempts >= maxAttempts) {
+            console.log('Reached maximum check attempts - timeout reached');
+            showTranscodingError();
+            resetButton();
+            cleanup();
         }
     }, interval);
 }
