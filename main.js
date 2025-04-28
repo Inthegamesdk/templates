@@ -343,6 +343,7 @@ function check403Error() {
         const errorDiv = document.createElement('div');
         errorDiv.style.color = 'red';
         errorDiv.style.padding = '10px';
+        errorDiv.style.marginBottom = '10px';
         errorDiv.style.textAlign = 'center';
         errorDiv.style.borderTop = '1px solid #ddd';
         errorDiv.textContent = 'Transcoding failed, please try again or replace video';
