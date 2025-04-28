@@ -313,6 +313,76 @@ function initializeVideoPlayer() {
     console.log('InTheGame SDK status:', window.inthegame ? 'loaded' : 'not loaded');
 }
 
+function check403Error() {
+    console.log('Starting 403 error check...');
+    let attempts = 0;
+    const maxAttempts = 10;
+    const interval = 1000; // 1 second
+
+    // Store original fetch and XHR
+    const originalFetch = window.fetch;
+    const originalXHR = window.XMLHttpRequest;
+
+    // Intercept fetch requests
+    window.fetch = async function(...args) {
+        const url = args[0];
+        console.log('Intercepted fetch request to:', url);
+        
+        if (typeof url === 'string' && url.includes('stream.inthegame.io')) {
+            try {
+                const response = await originalFetch.apply(this, args);
+                console.log('Fetch response status for', url, ':', response.status);
+                if (response.status === 403) {
+                    console.error('403 error detected (fetch) for:', url);
+                }
+                return response;
+            } catch (error) {
+                console.error('Fetch error:', error);
+                throw error;
+            }
+        }
+        return originalFetch.apply(this, args);
+    };
+
+    // Intercept XHR requests
+    window.XMLHttpRequest = function() {
+        const xhr = new originalXHR();
+        const originalOpen = xhr.open;
+        
+        xhr.open = function(...args) {
+            const url = args[1];
+            console.log('Intercepted XHR request to:', url);
+            
+            if (url && url.includes('stream.inthegame.io')) {
+                xhr.addEventListener('loadend', function() {
+                    console.log('XHR response status for', url, ':', this.status);
+                    if (this.status === 403) {
+                        console.error('403 error detected (XHR) for:', url);
+                    } else {
+                        console.log('No 403 error detected for:', url);
+                    }
+                });
+            }
+            return originalOpen.apply(this, args);
+        };
+        
+        return xhr;
+    };
+
+    const checkInterval = setInterval(() => {
+        attempts++;
+        console.log(`403 check attempt ${attempts}/${maxAttempts}`);
+        
+        if (attempts >= maxAttempts) {
+            clearInterval(checkInterval);
+            // Reset both fetch and XHR to original after we're done checking
+            window.fetch = originalFetch;
+            window.XMLHttpRequest = originalXHR;
+            console.log('Finished checking for 403 errors');
+        }
+    }, interval);
+}
+
 function injectJSON() {
     const jsonUpdated = document.getElementById('jsonUpdated');
     try {
@@ -329,6 +399,9 @@ function injectJSON() {
             setTimeout(() => {
                 button.classList.remove('show-message');
             }, 2000);
+
+            // Start checking for 403 errors after injection
+            check403Error();
         } else {
             console.error('InTheGame SDK not loaded or injectFlexi not available');
         }
