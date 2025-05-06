@@ -348,6 +348,11 @@ function check403Error() {
         errorDiv.style.borderTop = '1px solid #ddd';
         errorDiv.textContent = 'Transcoding failed, please try again or replace video';
         variablesSection.appendChild(errorDiv);
+        
+        // Make the error message disappear after 10 seconds
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 10000); // 10 seconds
     }
 
     function cleanup() {
