@@ -317,7 +317,7 @@ function check403Error() {
     console.log('Starting 403 error check...');
     let attempts = 0;
     const initialAttempts = 10; // Initial check period
-    const maxAttempts = 90; // Maximum check period if 403 is found
+    const maxAttempts = 60; // Maximum check period if 403 is found
     const interval = 1000; // 1 second
     let found403 = false;
 
@@ -343,10 +343,10 @@ function check403Error() {
         const errorDiv = document.createElement('div');
         errorDiv.style.color = 'red';
         errorDiv.style.padding = '10px';
-        errorDiv.style.marginBottom = '10px';
+        errorDiv.style.marginBottom = '50px';
         errorDiv.style.textAlign = 'center';
         errorDiv.style.borderTop = '1px solid #ddd';
-        errorDiv.textContent = 'Transcoding failed, please try again or replace video';
+        errorDiv.textContent = 'Process finished. If this is your first attempt, simply press Preview again to complete processing. If you already tried this multiple times, there may be a transcoding issue - please try replacing your video.';
         variablesSection.appendChild(errorDiv);
         
         // Make the error message disappear after 10 seconds
