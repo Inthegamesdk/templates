@@ -1,4 +1,10 @@
 window.clientTemplates = {
+    question1_19_05_25: 'https://assets.internal.inthegame.io/templates/azteka/question1_19.05.25.json',
+    question2_19_05_25: 'https://assets.internal.inthegame.io/templates/azteka/question2_19.05.25.json',
+    question3_19_05_25: 'https://assets.internal.inthegame.io/templates/azteka/question3_19.05.25.json',
+    question4_19_05_25: 'https://assets.internal.inthegame.io/templates/azteka/question4_19.05.25.json',
+    feedback_19_05_25: 'https://assets.internal.inthegame.io/templates/azteka/feedback_19.05.25.json',
+    lband_19_05_25: 'https://assets.internal.inthegame.io/templates/azteka/lband_19.05.25.json',
     question1_28_03_25: 'https://assets.internal.inthegame.io/templates/azteka/question1_28_03_25.json',
     question2_28_03_25: 'https://assets.internal.inthegame.io/templates/azteka/question2_28_03_25.json',
     question3_28_03_25: 'https://assets.internal.inthegame.io/templates/azteka/question3_28_03_25.json',
