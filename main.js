@@ -324,7 +324,7 @@ function check403Error() {
     // Get button and store original styles
     const button = document.querySelector('#inject-button');
     const originalText = button.textContent;
-    const originalColor = '#6a5acd';
+    const originalColor = 'black';
 
     function updateButtonProcessing() {
         button.style.backgroundColor = '#888';
@@ -450,12 +450,14 @@ function injectJSON() {
         if (window.inthegame && window.inthegame.injectFlexi) {
             window.inthegame.injectFlexi(stringifiedJson);
             
-            const button = document.querySelector('.inject-button');
-            button.classList.add('show-message');
-            
-            setTimeout(() => {
-                button.classList.remove('show-message');
-            }, 2000);
+            const button = document.querySelector('#inject-button');
+            if (button) {
+                button.classList.add('show-message');
+                
+                setTimeout(() => {
+                    button.classList.remove('show-message');
+                }, 2000);
+            }
 
             // Start checking for 403 errors after injection
             check403Error();
