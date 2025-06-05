@@ -1,7 +1,7 @@
 /* Header styles */
 .header {
     background-color: white;
-    padding: 10px 20px;
+    padding: 10px 10px 10px 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -114,7 +114,9 @@ body {
 
 .code-header h3 {
     margin: 0;
-    color: #666;
+    font-weight: 400;
+    color: #4b5056;
+    font-size: 16px;
 }
 
 .code-header .buttons {
