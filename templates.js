@@ -11,7 +11,7 @@ let jsonData = {
     "name": "creative_sidebyside_celsius",
     "launch": {
         "overlapVideoRect": false,
-        "duration": "00:00:30",
+        "duration": "00:00:10",
         "videoRect": {
             "x": "2%",
             "y": "22%",
