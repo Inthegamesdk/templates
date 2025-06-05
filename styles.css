@@ -1,16 +1,31 @@
+/* Header styles */
+.header {
+    background-color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    box-sizing: border-box;
+}
+
+.header-logo {
+    height: 40px;
+    width: auto;
+}
+
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     overflow: hidden;
-    background-color: #333;
+    background-color: white;
 }
 
 .container {
     display: grid;
     grid-template-columns: 1.5fr 0.75fr 0.75fr;
     gap: 10px;
-    height: calc(100vh - 5px);
+    height: calc(100vh - 70px); /* Adjusted to account for header height */
     padding: 0 5px;
 }
 
@@ -27,14 +42,13 @@ body {
 }
 
 .video-section {
-    background-color: #000;
+    background-color: #fff;
     height: auto;
     margin-bottom: 10px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 10px;
     padding-bottom: 10px;
 }
 
@@ -59,38 +73,47 @@ body {
 .source-code-section {
     display: flex;
     flex-direction: column;
-    background-color: #222;
+    background-color: white;
     height: 50%;
+    border: 1px solid #e0e0e0;
 }
 
 .output-code-section {
     display: flex;
     flex-direction: column;
-    background-color: #222;
+    background-color: white;
     height: 100%;
+    border: 1px solid #e0e0e0;
 }
 
 .variables-section {
-    background-color: #f5f5f5;
+    background-color: white;
     height: 100%;
-    padding: 20px;
     overflow-y: auto;
     flex: 1;
     display: flex;
     flex-direction: column;
+    border: 1px solid #e0e0e0;
+}
+
+.variables-content {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
 }
 
 .code-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #666;
+    background-color: #f8f8f8;
     padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .code-header h3 {
     margin: 0;
-    color: white;
+    color: #666;
 }
 
 .code-header .buttons {
@@ -100,19 +123,20 @@ body {
 
 .template-select {
     padding: 5px 10px;
-    background-color: #f5f5f5;
-    color: #333;
-    border: none;
-    border-radius: 0;
+    background-color: white;
+    color: #666;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
 }
 
 .copy-icon, .download-icon {
-    background-color: #f5f5f5;
-    color: #333;
-    border: none;
+    background-color: white;
+    color: #666;
+    border: 1px solid #e0e0e0;
     cursor: pointer;
     padding: 5px 10px;
     height: 28px;
+    border-radius: 6px;
 }
 
 .download-icon {
@@ -126,8 +150,8 @@ body {
     border: none;
     resize: none;
     margin: 0;
-    background-color: #222;
-    color: white;
+    background-color: white;
+    color: #666;
     overflow-y: auto;
 }
 
@@ -137,20 +161,22 @@ body {
     left: 0;
     width: 100%;
     height: 40px;
-    background-color: #333;
+    background-color: #f8f8f8;
     display: flex;
+    border-top: 1px solid #e0e0e0;
 }
 
 .inject-preview-button {
     width: 100%;
     height: 100%;
-    background-color: #6a5acd;
+    background-color: black;
     color: white;
     border: none;
     text-transform: lowercase;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border-radius: 6px;
 }
 
 .inject-preview-button:hover {
@@ -182,18 +208,20 @@ h2 {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #666;
 }
 
 .input-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
     margin-bottom: 5px;
     box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: #666;
 }
 
 .input-group input:focus {
@@ -205,8 +233,8 @@ h2 {
     background-color: white;
     padding: 15px;
     margin-bottom: 15px;
-    border-radius: 0;
-    border: 1px solid #ddd;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
 }
 
 .placeholder-header {
@@ -219,6 +247,7 @@ h2 {
     background-color: #e8f5e9;
     border: 1px solid #81c784;
     transition: background-color 0.3s ease;
+    border-radius: 6px;
 }
 
 .column-3 {
