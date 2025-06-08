@@ -176,6 +176,64 @@ function createPlaceholderInput(placeholder, index, container) {
     container.appendChild(instanceDiv);
 }
 
+// Add function to get output format from URL
+function getOutputFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('output') || 'json';
+}
+
+// Add function to format output as VAST XML
+function formatAsVAST(jsonData) {
+    const jsonString = JSON.stringify(jsonData); // Minified JSON (removed null, 2 parameters)
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd"
+    version="3.0">
+    <Ad id="12345">
+        <InLine>
+            <AdSystem>ITG</AdSystem>
+            <AdTitle>ITG VAST Advertisement</AdTitle>
+            <Error><![CDATA[https://pubads.g.doubleclick.net/pagead/interaction/?ai=Bd-yyaBXTZ7T7JLrMkdUP1oXBoAfZ9ryQRwAAABABIKypmh04AVjVmZv_gwRg-br0g5wQugETMzM2eDI2OSw2NDB4NDgwX3htbMgBAsACAuACAOoCES81NTY0NjQwNC92aXV0ZXN0-AL50R6AAwGQA8gGmAPIBqgDAeAEAdIFBhCBgbTuGZAGAaAGMqgHuL6xAqgHmgaoB_PRG6gHltgbqAeqm7ECqAfgvbECqAf_nrECqAffn7ECqAf4wrECqAf7wrEC2AcB4AcB0ggmCIBhEAEYHTICigI6C4BAgMCAgICgqIACSL39wTpY5aGti8qHjAPYCAKACgWYCwGqDQJJTOoNEwjMn66LyoeMAxU6ZqQEHdZCEHTwDQHQFQH4FgGAFwE]]]></Error>
+            <Impression><![CDATA[https://pubads.g.doubleclick.net/pagead/interaction/?ai=Bd-yyaBXTZ7T7JLrMkdUP1oXBoAfZ9ryQRwAAABABIKypmh04AVjVmZv_gwRg-br0g5wQugETMzM2eDI2OSw2NDB4NDgwX3htbMgBAsACAuACAOoCES81NTY0NjQwNC92aXV0ZXN0-AL50R6AAwGQA8gGmAPIBqgDAeAEAdIFBhCBgbTuGZAGAaAGMqgHuL6xAqgHmgaoB_PRG6gHltgbqAeqm7ECqAfgvbECqAf_nrECqAffn7ECqAf4wrECqAf7wrEC2AcB4AcB0ggmCIBhEAEYHTICigI6C4BAgMCAgICgqIACSL39wTpY5aGti8qHjAPYCAKACgWYCwGqDQJJTOoNEwjMn66LyoeMAxU6ZqQEHdZCEHTwDQHQFQH4FgGAFwE]]></Impression>
+            <Creatives>
+                <Creative id="ADVERTISEMENT_ID" sequence="1">
+                    <Linear>
+                        <Duration>00:00:10</Duration>
+                        <VideoClicks>
+                            <ClickThrough><![CDATA[]]></ClickThrough>
+                            <ClickTracking><![CDATA[]]></ClickTracking>
+                        </VideoClicks>
+                        <MediaFiles>
+                            <MediaFile delivery="progressive" type="video/mp4" width="640" height="480" bitrate="800">
+                                <![CDATA[https://example.com/video.mp4]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+                <Creative id="vtechad2" sequence="2">
+                    <NonLinearAds>
+                        <NonLinear id="overlay" width="1920" height="1080" minSuggestedDuration="00:00:10">
+                            <StaticResource creativeType="application/json">
+                                <![CDATA[${jsonString}]]>
+                            </StaticResource>
+                        </NonLinear>
+                    </NonLinearAds>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>`;
+}
+
+// Add function to format output based on output parameter
+function formatOutput(jsonData) {
+    const outputFormat = getOutputFromURL();
+    if (outputFormat === 'vast') {
+        return formatAsVAST(jsonData);
+    } else {
+        return JSON.stringify(jsonData, null, 2);
+    }
+}
+
 function updateJSON() {
     const inputs = document.querySelectorAll('#dynamicInputs input');
     
@@ -200,8 +258,8 @@ function updateJSON() {
         }
     });
 
-    const formattedJson = JSON.stringify(window.jsonData, null, 2);
-    document.getElementById('jsonUpdated').value = formattedJson;
+    const formattedOutput = formatOutput(window.jsonData);
+    document.getElementById('jsonUpdated').value = formattedOutput;
 }
 
 function parseJSON() {
@@ -248,9 +306,12 @@ async function loadTemplate(templateName) {
         window.jsonData = data;
         const formattedJson = JSON.stringify(data, null, 2);
         
-        // Update both textareas
+        // Update input textarea with JSON
         jsonInput.value = formattedJson;
-        jsonUpdated.value = formattedJson;
+        
+        // Update output textarea with formatted output (JSON or VAST)
+        const formattedOutput = formatOutput(data);
+        jsonUpdated.value = formattedOutput;
         
         errorElement.textContent = '';
         
@@ -441,10 +502,9 @@ function check403Error() {
 }
 
 function injectJSON() {
-    const jsonUpdated = document.getElementById('jsonUpdated');
     try {
-        const jsonData = JSON.parse(jsonUpdated.value);
-        const stringifiedJson = JSON.stringify(jsonData);
+        // Always use the original JSON data, not the formatted output
+        const stringifiedJson = JSON.stringify(window.jsonData);
         console.log('Attempting to inject JSON:', stringifiedJson);
         
         if (window.inthegame && window.inthegame.injectFlexi) {
@@ -465,7 +525,7 @@ function injectJSON() {
             console.error('InTheGame SDK not loaded or injectFlexi not available');
         }
     } catch (error) {
-        console.error('Error parsing JSON:', error);
+        console.error('Error with JSON data:', error);
     }
 }
 
@@ -486,9 +546,9 @@ function handleInputChange(event) {
         const placeholderInstance = input.closest('.placeholder-instance');
         placeholderInstance.classList.add('updated');
 
-        // Update the JSON in the Updated JSON box
-        const formattedJson = JSON.stringify(window.jsonData, null, 2);
-        document.getElementById('jsonUpdated').value = formattedJson;
+        // Update the output with formatted output (JSON or VAST)
+        const formattedOutput = formatOutput(window.jsonData);
+        document.getElementById('jsonUpdated').value = formattedOutput;
     }
 }
 
@@ -571,7 +631,7 @@ function updateJSONAfterLoad() {
         }
     });
     
-    // Update the JSON in the output textarea
-    const formattedJson = JSON.stringify(window.jsonData, null, 2);
-    document.getElementById('jsonUpdated').value = formattedJson;
+    // Update the output with formatted output (JSON or VAST)
+    const formattedOutput = formatOutput(window.jsonData);
+    document.getElementById('jsonUpdated').value = formattedOutput;
 }

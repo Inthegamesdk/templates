@@ -106,11 +106,25 @@
                 return;
             }
             
-            const blob = new Blob([jsonContent], { type: 'application/json' });
+            // Get output format from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const outputFormat = urlParams.get('output') || 'json';
+            
+            // Determine file type and name based on output format
+            let contentType, fileName;
+            if (outputFormat === 'vast') {
+                contentType = 'application/xml';
+                fileName = 'itgvast.xml';
+            } else {
+                contentType = 'application/json';
+                fileName = 'flexi.json';
+            }
+            
+            const blob = new Blob([jsonContent], { type: contentType });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'flexi.json';
+            a.download = fileName;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
