@@ -132,7 +132,7 @@ body {
     border-radius: 6px;
 }
 
-.copy-icon, .download-icon {
+.copy-icon, .download-icon, .upload-icon {
     background-color: white;
     color: #666;
     border: 1px solid #e0e0e0;
@@ -143,11 +143,11 @@ body {
     transition: border-color 0.3s ease;
 }
 
-.copy-icon:hover, .download-icon:hover {
+.copy-icon:hover, .download-icon:hover, .upload-icon:hover {
     border-color: #ffd700;
 }
 
-.download-icon {
+.download-icon, .upload-icon {
     margin-left: 5px;
 }
 
