@@ -136,10 +136,44 @@
             URL.revokeObjectURL(url);
         }
 
+        // Custom notification function
+        function showNotification(title, message, type = 'success') {
+            // Remove any existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            notification.innerHTML = `
+                <div class="notification-title">${title}</div>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            // Add to body
+            document.body.appendChild(notification);
+            
+            // Show notification with animation
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Auto hide after 4 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 4000);
+        }
+
         async function uploadJSON() {
             const jsonContent = document.getElementById('jsonUpdated').value;
             if (!jsonContent.trim()) {
-                alert('No content to upload');
+                showNotification('Upload Error', 'No content to upload', 'error');
                 return;
             }
             
@@ -197,7 +231,14 @@
                 });
                 
                 if (!response.ok) {
-                    throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
+                    // Handle specific status codes
+                    if (response.status === 403) {
+                        throw new Error('Please wait 1 min between uploads');
+                    } else if (response.status === 429) {
+                        throw new Error('Please wait 1 min between uploads');
+                    } else {
+                        throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
+                    }
                 }
                 
                 const result = await response.json();
@@ -211,12 +252,12 @@
                 // Copy URL to clipboard
                 await navigator.clipboard.writeText(result.url);
                 
-                // Show success message
-                alert('File uploaded successfully! URL copied to clipboard.');
+                // Show success notification
+                showNotification('Upload Successful!', 'File uploaded and URL copied to clipboard', 'success');
                 
             } catch (error) {
                 console.error('Upload error:', error);
-                alert(`Upload failed: ${error.message}`);
+                showNotification('Upload Failed', error.message, 'error');
             } finally {
                 // Reset button state
                 const uploadButton = document.querySelector('.upload-icon');
