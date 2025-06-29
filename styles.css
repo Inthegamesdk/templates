@@ -132,7 +132,7 @@ body {
     border-radius: 6px;
 }
 
-.copy-icon, .download-icon {
+.copy-icon, .download-icon, .upload-icon {
     background-color: white;
     color: #666;
     border: 1px solid #e0e0e0;
@@ -143,11 +143,11 @@ body {
     transition: border-color 0.3s ease;
 }
 
-.copy-icon:hover, .download-icon:hover {
+.copy-icon:hover, .download-icon:hover, .upload-icon:hover {
     border-color: #ffd700;
 }
 
-.download-icon {
+.download-icon, .upload-icon {
     margin-left: 5px;
 }
 
@@ -281,4 +281,50 @@ h2 {
     height: 1px;
     background-color: #ddd;
     margin: 15px 0;
+}
+
+/* Custom notification styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    max-width: 350px;
+    word-wrap: break-word;
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification.success {
+    background-color: #4CAF50;
+    border-left: 4px solid #45a049;
+}
+
+.notification.error {
+    background-color: #f44336;
+    border-left: 4px solid #da190b;
+}
+
+.notification .notification-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.notification .notification-message {
+    font-weight: normal;
+    opacity: 0.95;
 }
