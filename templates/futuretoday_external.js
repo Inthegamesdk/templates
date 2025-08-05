@@ -4,4 +4,3 @@ window.clientTemplates = {
     lower_third_ad: 'https://assets.internal.inthegame.io/templates/FT/external/external_lower_third_banner.json'
 }; 
 
-
