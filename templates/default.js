@@ -9,7 +9,5 @@ window.clientTemplates = {
     left_side_animation: 'https://assets.internal.inthegame.io/templates/general/left_side_animation.json',
     full_animation_only: 'https://assets.internal.inthegame.io/templates/general/full_ad_all.json',
     full_animation_with_bg: 'https://assets.internal.inthegame.io/templates/general/full_ad_bg_video.json',
-    full_video_ad: 'https://assets.internal.inthegame.io/templates/general/verve_full_video_ad.json',
-    full_image_ad: 'https://assets.internal.inthegame.io/templates/general/verve_full_ad_image.json',
-    left_side_ad: 'https://assets.internal.inthegame.io/templates/general/verve_left_side.json',
+   
 }; 
