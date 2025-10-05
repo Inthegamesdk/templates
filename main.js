@@ -192,23 +192,9 @@ function formatAsVAST(jsonData) {
         <InLine>
             <AdSystem>ITG</AdSystem>
             <AdTitle>ITG VAST Advertisement</AdTitle>
-            <Error><![CDATA[https://pubads.g.doubleclick.net/pagead/interaction/?ai=Bd-yyaBXTZ7T7JLrMkdUP1oXBoAfZ9ryQRwAAABABIKypmh04AVjVmZv_gwRg-br0g5wQugETMzM2eDI2OSw2NDB4NDgwX3htbMgBAsACAuACAOoCES81NTY0NjQwNC92aXV0ZXN0-AL50R6AAwGQA8gGmAPIBqgDAeAEAdIFBhCBgbTuGZAGAaAGMqgHuL6xAqgHmgaoB_PRG6gHltgbqAeqm7ECqAfgvbECqAf_nrECqAffn7ECqAf4wrECqAf7wrEC2AcB4AcB0ggmCIBhEAEYHTICigI6C4BAgMCAgICgqIACSL39wTpY5aGti8qHjAPYCAKACgWYCwGqDQJJTOoNEwjMn66LyoeMAxU6ZqQEHdZCEHTwDQHQFQH4FgGAFwE]]]></Error>
-            <Impression><![CDATA[https://pubads.g.doubleclick.net/pagead/interaction/?ai=Bd-yyaBXTZ7T7JLrMkdUP1oXBoAfZ9ryQRwAAABABIKypmh04AVjVmZv_gwRg-br0g5wQugETMzM2eDI2OSw2NDB4NDgwX3htbMgBAsACAuACAOoCES81NTY0NjQwNC92aXV0ZXN0-AL50R6AAwGQA8gGmAPIBqgDAeAEAdIFBhCBgbTuGZAGAaAGMqgHuL6xAqgHmgaoB_PRG6gHltgbqAeqm7ECqAfgvbECqAf_nrECqAffn7ECqAf4wrECqAf7wrEC2AcB4AcB0ggmCIBhEAEYHTICigI6C4BAgMCAgICgqIACSL39wTpY5aGti8qHjAPYCAKACgWYCwGqDQJJTOoNEwjMn66LyoeMAxU6ZqQEHdZCEHTwDQHQFQH4FgGAFwE]]></Impression>
+            <Error><![CDATA[]]]></Error>
+            <Impression><![CDATA[]]></Impression>
             <Creatives>
-                <Creative id="ADVERTISEMENT_ID" sequence="1">
-                    <Linear>
-                        <Duration>00:00:10</Duration>
-                        <VideoClicks>
-                            <ClickThrough><![CDATA[]]></ClickThrough>
-                            <ClickTracking><![CDATA[]]></ClickTracking>
-                        </VideoClicks>
-                        <MediaFiles>
-                            <MediaFile delivery="progressive" type="video/mp4" width="640" height="480" bitrate="800">
-                                <![CDATA[https://example.com/video.mp4]]>
-                            </MediaFile>
-                        </MediaFiles>
-                    </Linear>
-                </Creative>
                 <Creative id="vtechad2" sequence="2">
                     <NonLinearAds>
                         <NonLinear id="overlay" width="1920" height="1080" minSuggestedDuration="00:00:10">
