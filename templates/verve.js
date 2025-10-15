@@ -4,5 +4,6 @@ window.clientTemplates = {
    Corner_ad_animation: 'https://assets.internal.inthegame.io/templates/verve/verve_side_bottom_animation.json',
    full_video_ad: 'https://assets.internal.inthegame.io/templates/verve/verve_full_video_ad.json',
    full_image_ad: 'https://assets.internal.inthegame.io/templates/verve/verve_full_ad_image.json',
+   full_video_ad_no_button: 'https://assets.internal.inthegame.io/templates/verve/verve_full_vido_no_button',
    left_side_ad: 'https://assets.internal.inthegame.io/templates/verve/verve_left_side.json',
 }; 
