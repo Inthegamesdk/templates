@@ -5,5 +5,5 @@ window.clientTemplates = {
    full_video_ad: 'https://assets.internal.inthegame.io/templates/verve/verve_full_video_ad.json',
    full_image_ad: 'https://assets.internal.inthegame.io/templates/verve/verve_full_ad_image.json',
    full_video_ad_no_button: 'https://assets.internal.inthegame.io/templates/verve/verve_full_video_no_button',
-   left_side_ad: 'https://assets.internal.inthegame.io/templates/verve/verve_left_side.json',
+   left_side_ad: 'https://assets.internal.inthegame.io/templates/verve/verve_left_side.json'
 }; 
