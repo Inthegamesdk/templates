@@ -1,0 +1,26 @@
+{
+    "autoinjectCfg": [
+        {
+            "timing": [
+                "2025-01-31T13:45:00.000Z",
+                "2025-01-29T13:48:00.000Z",
+                "2025-01-29T10:02:00.000Z"
+            ],
+            "data": {
+                "id": "678a5b594c6d3c4bfb31a3a3",
+                "module": "flexi",
+                "timeToStay": 100,
+                "feedbackTime": 0,
+                "activeInjection": true,
+                "isPause": false,
+                "closePostInteraction": true,
+                "devices": [
+                    "smartTV",
+                    "desktop",
+                    "mobile",
+                    "mobilePortrait"
+                ]
+            }
+        }
+    ]
+} 
