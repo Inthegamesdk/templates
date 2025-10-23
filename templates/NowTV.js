@@ -8,5 +8,5 @@ window.clientTemplates = {
    Pause_Ad_Side: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_pause_side_ad.json',
    Pause_Ad_Side_positions_size: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_pause_side_ad_size_positions.json',
    Mobile_Web_Lband: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_lband.json',
-   Mobile_Web_ovelry_banner: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_lband.json'
+   Mobile_Web_ovelry_banner: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_overlay.json'
 }; 
