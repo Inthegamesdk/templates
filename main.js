@@ -199,6 +199,7 @@ function formatAsVAST(jsonData) {
                     <NonLinearAds>
                         <NonLinear id="overlay" width="1920" height="1080" minSuggestedDuration="00:00:10">
                             <StaticResource creativeType="application/json">
+                                <![CDATA[${jsonString}]]>
                             </StaticResource>
                         </NonLinear>
                     </NonLinearAds>
