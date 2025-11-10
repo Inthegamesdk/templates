@@ -192,7 +192,7 @@ function formatAsVAST(jsonData) {
         <InLine>
             <AdSystem>ITG</AdSystem>
             <AdTitle>ITG VAST Advertisement</AdTitle>
-            <Error><![CDATA[]]]></Error>
+            <Error><![CDATA[https://example.com/error]]></Error>
             <Impression><![CDATA[]]></Impression>
             <Creatives>
                 <Creative id="vtechad2" sequence="2">
