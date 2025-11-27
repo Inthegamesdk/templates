@@ -106,10 +106,10 @@ function createPlaceholderInput(placeholder, index, container) {
     header.className = 'placeholder-header';
     const pathParts = placeholder.path.split('.');
     const mainPath = pathParts[pathParts.length - 1];
-    
+
     // Remove the header text completely to eliminate the type label
     // header.textContent = mainPath;
-    
+
     const inputGroup = document.createElement('div');
     inputGroup.className = 'input-group';
 
@@ -127,7 +127,7 @@ function createPlaceholderInput(placeholder, index, container) {
     const input = document.createElement('input');
     input.id = `input-${index}`;
     input.dataset.path = placeholder.path;
-    
+
     if (placeholder.type === 'COLOR') {
         input.type = 'color';
     } else if (placeholder.type === 'URL') {
@@ -142,7 +142,7 @@ function createPlaceholderInput(placeholder, index, container) {
         input.dataset.isNamed = 'true';
         input.dataset.name = placeholder.name;
         input.dataset.type = placeholder.type;
-        
+
         if (placeholder.section) {
             input.dataset.section = placeholder.section;
         }
@@ -169,7 +169,7 @@ function createPlaceholderInput(placeholder, index, container) {
 
     // Only append the header if we want to show it (currently commented out)
     // instanceDiv.appendChild(header);
-    
+
     inputGroup.appendChild(label);
     inputGroup.appendChild(input);
     instanceDiv.appendChild(inputGroup);
@@ -192,7 +192,7 @@ function formatAsVAST(jsonData) {
         <InLine>
             <AdSystem>ITG</AdSystem>
             <AdTitle>ITG VAST Advertisement</AdTitle>
-            <Error><![CDATA[]]]></Error>
+            <Error><![CDATA[https://example.com/error]]></Error>
             <Impression><![CDATA[]]></Impression>
             <Creatives>
                 <Creative id="vtechad2" sequence="2">
@@ -205,6 +205,13 @@ function formatAsVAST(jsonData) {
                     </NonLinearAds>
                 </Creative>
             </Creatives>
+            <Extensions>
+                <Extension type="inthegame">
+                    <AdData>
+                        <![CDATA[${jsonString}]]>
+                    </AdData>
+                </Extension>
+            </Extensions>
         </InLine>
     </Ad>
 </VAST>`;
@@ -222,7 +229,7 @@ function formatOutput(jsonData) {
 
 function updateJSON() {
     const inputs = document.querySelectorAll('#dynamicInputs input');
-    
+
     inputs.forEach(input => {
         const path = input.dataset.path;
         const value = input.value;
@@ -232,11 +239,11 @@ function updateJSON() {
             } else {
                 setValueByPath(window.jsonData, path, value);
             }
-            
+
             // Add highlight effect
             const placeholderInstance = input.closest('.placeholder-instance');
             placeholderInstance.classList.add('updated');
-            
+
             // Remove highlight after 1.5 seconds
             setTimeout(() => {
                 placeholderInstance.classList.remove('updated');
@@ -251,7 +258,7 @@ function updateJSON() {
 function parseJSON() {
     const jsonInput = document.getElementById('jsonInput');
     const errorElement = document.getElementById('jsonError');
-    
+
     try {
         window.jsonData = JSON.parse(jsonInput.value);
         errorElement.textContent = '';
@@ -264,7 +271,7 @@ function parseJSON() {
 function formatJSON() {
     const jsonInput = document.getElementById('jsonInput');
     const errorElement = document.getElementById('jsonError');
-    
+
     try {
         const formatted = JSON.stringify(JSON.parse(jsonInput.value), null, 2);
         jsonInput.value = formatted;
@@ -287,29 +294,29 @@ async function loadTemplate(templateName) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         window.jsonData = data;
         const formattedJson = JSON.stringify(data, null, 2);
-        
+
         // Update input textarea with JSON
         jsonInput.value = formattedJson;
-        
+
         // Update output textarea with formatted output (JSON or VAST)
         const formattedOutput = formatOutput(data);
         jsonUpdated.value = formattedOutput;
-        
+
         errorElement.textContent = '';
-        
+
         // Clear all highlights before creating new input fields
         const existingHighlights = document.querySelectorAll('.placeholder-instance.updated');
         existingHighlights.forEach(el => el.classList.remove('updated'));
-        
+
         createInputFields();
 
         // Add a function to clear the undefined text
         clearUndefinedText();
-        
+
         // Update JSON after loading template and creating input fields
         updateJSONAfterLoad();
 
@@ -323,10 +330,10 @@ function copyToClipboard() {
     const textarea = document.getElementById('jsonUpdated');
     textarea.select();
     document.execCommand('copy');
-    
+
     const button = document.querySelector('.copy-button');
     button.classList.add('show-message');
-    
+
     setTimeout(() => {
         button.classList.remove('show-message');
     }, 2000);
@@ -335,7 +342,7 @@ function copyToClipboard() {
 function initializeVideoPlayer() {
     const video = document.getElementById('video-player');
     const videoSrc = 'https://2432eaf2dccf48859f8ea489fd5e0f8f.mediatailor.us-east-1.amazonaws.com/v1/master/7c8ce5ad5bcc5198ca301174a2ead89b25915ca4/stitchtest/index.m3u8';
-    
+
     // Initialize HLS player
     if (Hls.isSupported()) {
         const hls = new Hls();
@@ -352,7 +359,7 @@ function initializeVideoPlayer() {
             videoPlayerId: "video-player",
             accountId: '6742d3571cc96f979c9bc1d5',
             clocksMode: 'manual',
-            adsMetadata: [{time: 75,duration: 10}],
+            adsMetadata: [{ time: 75, duration: 10 }],
             channelSlug: 'dpgtest'
         });
     }
@@ -395,7 +402,7 @@ function check403Error() {
         errorDiv.style.borderTop = '1px solid #ddd';
         errorDiv.textContent = 'Process finished. If this is your first attempt, simply press Preview again to complete processing. If you already tried this multiple times, there may be a transcoding issue - please try replacing your video.';
         variablesSection.appendChild(errorDiv);
-        
+
         // Make the error message disappear after 10 seconds
         setTimeout(() => {
             errorDiv.remove();
@@ -413,14 +420,14 @@ function check403Error() {
     const originalXHR = window.XMLHttpRequest;
 
     // Intercept fetch requests
-    window.fetch = async function(...args) {
+    window.fetch = async function (...args) {
         const url = args[0];
-        
+
         if (typeof url === 'string' && url.includes('stream.inthegame.io')) {
             try {
                 const response = await originalFetch.apply(this, args);
                 console.log('Fetch response status for', url, ':', response.status);
-                
+
                 if (response.status === 403) {
                     found403 = true;
                     updateButtonProcessing();
@@ -440,15 +447,15 @@ function check403Error() {
     };
 
     // Intercept XHR requests
-    window.XMLHttpRequest = function() {
+    window.XMLHttpRequest = function () {
         const xhr = new originalXHR();
         const originalOpen = xhr.open;
-        
-        xhr.open = function(...args) {
+
+        xhr.open = function (...args) {
             const url = args[1];
-            
+
             if (url && url.includes('stream.inthegame.io')) {
-                xhr.addEventListener('loadend', function() {
+                xhr.addEventListener('loadend', function () {
                     console.log('XHR response status for', url, ':', this.status);
                     if (this.status === 403) {
                         found403 = true;
@@ -462,21 +469,21 @@ function check403Error() {
             }
             return originalOpen.apply(this, args);
         };
-        
+
         return xhr;
     };
 
     const checkInterval = setInterval(() => {
         attempts++;
         console.log(`403 check attempt ${attempts}/${found403 ? maxAttempts : initialAttempts}`);
-        
+
         // Stop checking if we haven't found 403 after initial attempts
         if (!found403 && attempts >= initialAttempts) {
             console.log('No 403 errors detected after initial check period, stopping checks');
             cleanup();
             return;
         }
-        
+
         // Continue checking up to maxAttempts if we found 403
         if (found403 && attempts >= maxAttempts) {
             console.log('Reached maximum check attempts - timeout reached');
@@ -492,14 +499,14 @@ function injectJSON() {
         // Always use the original JSON data, not the formatted output
         const stringifiedJson = JSON.stringify(window.jsonData);
         console.log('Attempting to inject JSON:', stringifiedJson);
-        
+
         if (window.inthegame && window.inthegame.injectFlexi) {
             window.inthegame.injectFlexi(stringifiedJson);
-            
+
             const button = document.querySelector('#inject-button');
             if (button) {
                 button.classList.add('show-message');
-                
+
                 setTimeout(() => {
                     button.classList.remove('show-message');
                 }, 2000);
@@ -520,14 +527,14 @@ function handleInputChange(event) {
     const input = event.target;
     const path = input.dataset.path;
     const value = input.value;
-    
+
     if (value) {
         if (input.dataset.isNamed === 'true') {
             setValueByPath(window.jsonData, path, value);
         } else {
             setValueByPath(window.jsonData, path, value);
         }
-        
+
         // Add highlight effect without removing it
         const placeholderInstance = input.closest('.placeholder-instance');
         placeholderInstance.classList.add('updated');
@@ -547,12 +554,12 @@ function loadClientTemplates() {
     const client = getClientFromURL();
     const scriptElement = document.getElementById('client-templates');
     scriptElement.src = `templates/${client}.js`;
-    
+
     scriptElement.onload = () => {
         window.templates = window.clientTemplates;
         updateTemplateButtons();
     };
-    
+
     scriptElement.onerror = () => {
         console.error('Error loading client templates, falling back to default');
         scriptElement.src = 'templates/default.js';
@@ -562,7 +569,7 @@ function loadClientTemplates() {
 function updateTemplateButtons() {
     const templateSelect = document.getElementById('template-select');
     templateSelect.innerHTML = '<option value="">Select Template</option>';
-    
+
     // Add options for each template
     Object.keys(window.templates).forEach(templateName => {
         const option = document.createElement('option');
@@ -570,7 +577,7 @@ function updateTemplateButtons() {
         option.value = templateName;
         templateSelect.appendChild(option);
     });
-    
+
     // Add change event listener
     templateSelect.addEventListener('change', (e) => {
         if (e.target.value) {
@@ -579,15 +586,15 @@ function updateTemplateButtons() {
     });
 }
 
-window.onload = function() {
+window.onload = function () {
     loadClientTemplates();
-    
+
     // Initialize with empty strings instead of undefined
-    document.getElementById('jsonInput').value = window.jsonData ? 
+    document.getElementById('jsonInput').value = window.jsonData ?
         JSON.stringify(window.jsonData, null, 2) : '';
-    document.getElementById('jsonUpdated').value = window.jsonData ? 
+    document.getElementById('jsonUpdated').value = window.jsonData ?
         JSON.stringify(window.jsonData, null, 2) : '';
-    
+
     createInputFields();
     initializeVideoPlayer();
 };
@@ -605,18 +612,18 @@ function clearUndefinedText() {
 function updateJSONAfterLoad() {
     // Get all inputs from the dynamic inputs container
     const inputs = document.querySelectorAll('#dynamicInputs input');
-    
+
     // Process each input to update the JSON
     inputs.forEach(input => {
         const path = input.dataset.path;
         const value = input.value;
-        
+
         if (value) {
             // Update the JSON data with the input value
             setValueByPath(window.jsonData, path, value);
         }
     });
-    
+
     // Update the output with formatted output (JSON or VAST)
     const formattedOutput = formatOutput(window.jsonData);
     document.getElementById('jsonUpdated').value = formattedOutput;
