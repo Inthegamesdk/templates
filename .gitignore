@@ -1,6 +1,6 @@
 # Deployment script
 deploy.sh
-
+assets/
 # Dependencies
 node_modules/
 
