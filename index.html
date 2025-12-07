@@ -20,11 +20,24 @@
     <div class="container">
         <div class="column column-1">
             <div class="video-section">
-                <div class="video-container">
+                <div class="video-container" id="video-container">
                     <video id="video-player" controls>
                         <source src="https://2432eaf2dccf48859f8ea489fd5e0f8f.mediatailor.us-east-1.amazonaws.com/v1/master/7c8ce5ad5bcc5198ca301174a2ead89b25915ca4/stitchtest/index.m3u8" type="application/x-mpegURL">
                         Your browser does not support HLS video.
                     </video>
+                </div>
+                <div class="aspect-ratio-controls">
+                    <button class="aspect-ratio-btn" data-ratio="16:9" data-percent="56.25">16:9</button>
+                    <button class="aspect-ratio-btn" data-ratio="9:16" data-percent="177.78">9:16</button>
+                    <button class="aspect-ratio-btn" data-ratio="4:3" data-percent="75">4:3</button>
+                    <button class="aspect-ratio-btn" data-ratio="2:1" data-percent="50">2:1</button>
+                    <button class="aspect-ratio-btn" data-ratio="1:1" data-percent="100">1:1</button>
+                    <button class="aspect-ratio-btn" data-ratio="22:9" data-percent="40.91">22:9</button>
+                    <button class="aspect-ratio-btn" data-ratio="20:9" data-percent="45">20:9</button>
+                    <button class="aspect-ratio-btn" data-ratio="19:9" data-percent="47.37">19:9</button>
+                    <button class="aspect-ratio-btn" data-ratio="19.5:9" data-percent="46.15">19.5:9</button>
+                    <button class="aspect-ratio-btn" data-ratio="18:9" data-percent="50">18:9</button>
+                    <button class="aspect-ratio-btn" data-ratio="17:9" data-percent="52.94">17:9</button>
                 </div>
             </div>
             <div class="source-code-section">
@@ -102,6 +115,45 @@
                     setVideoPosition();
                 }
             });
+
+            // Aspect ratio button handlers
+            const aspectRatioButtons = document.querySelectorAll('.aspect-ratio-btn');
+            const videoContainer = document.getElementById('video-container');
+            
+            aspectRatioButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    aspectRatioButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get the aspect ratio percentage
+                    const paddingPercent = parseFloat(this.getAttribute('data-percent'));
+                    const ratio = this.getAttribute('data-ratio');
+                    
+                    // 16:9 reference height
+                    const standardHeight = 56.25;
+                    
+                    // If the aspect ratio is wider than 16:9 (smaller padding %), keep width 100% and use actual height
+                    // If the aspect ratio is narrower than 16:9 (larger padding %), keep height and reduce width
+                    if (paddingPercent <= standardHeight) {
+                        // Wider than 16:9 - keep full width, use actual aspect ratio height
+                        videoContainer.style.maxWidth = '100%';
+                        videoContainer.style.paddingBottom = paddingPercent + '%';
+                        videoContainer.style.margin = '0';
+                    } else {
+                        // Narrower than 16:9 - keep 16:9 height, reduce width
+                        videoContainer.style.paddingBottom = standardHeight + '%';
+                        let widthPercent = (standardHeight / paddingPercent) * 100;
+                        videoContainer.style.maxWidth = widthPercent + '%';
+                        videoContainer.style.margin = '0 auto';
+                    }
+                });
+            });
+
+            // Set default active button (16:9)
+            aspectRatioButtons[0].classList.add('active');
         });
 
         function downloadJSON() {
