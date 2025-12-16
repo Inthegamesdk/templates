@@ -48,9 +48,9 @@ body {
     margin-bottom: 10px;
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 10px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
 }
 
 .video-container {
@@ -69,6 +69,40 @@ body {
     width: 100%;
     height: 100%;
     background: #000;
+    object-fit: fill; /* Stretch content to fill container */
+}
+
+/* Aspect ratio controls */
+.aspect-ratio-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 15px 10px;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.aspect-ratio-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    background-color: white;
+    color: #666;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 50px;
+}
+
+.aspect-ratio-btn:hover {
+    border-color: #107eff;
+    color: #107eff;
+}
+
+.aspect-ratio-btn.active {
+    background-color: #107eff;
+    color: white;
+    border-color: #107eff;
 }
 
 .source-code-section {
