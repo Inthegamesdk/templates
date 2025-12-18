@@ -290,6 +290,9 @@ async function loadTemplate(templateName) {
         errorElement.textContent = 'Loading...';
         errorElement.style.color = '#666';
 
+        // Clean up any existing InTheGame overlays before loading new template
+        cleanupInTheGameOverlays();
+
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -494,8 +497,55 @@ function check403Error() {
     }, interval);
 }
 
+function cleanupInTheGameOverlays() {
+    try {
+        console.log('Cleaning up InTheGame overlays...');
+        
+        // Try to destroy existing InTheGame instance if it exists
+        if (window.inthegame && typeof window.inthegame.destroy === 'function') {
+            window.inthegame.destroy();
+            console.log('InTheGame SDK destroyed');
+        }
+        
+        // Remove any InTheGame overlay elements from the DOM
+        const overlaySelectors = [
+            '[class*="inthegame"]',
+            '[id*="inthegame"]',
+            '[class*="itg-"]',
+            '[id*="itg-"]',
+            '.flexi-container',
+            '#flexi-container'
+        ];
+        
+        overlaySelectors.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                // Only remove if it's not part of our main UI
+                if (!el.closest('#video-container') && el.id !== 'video-player') {
+                    el.remove();
+                    console.log('Removed overlay element:', selector);
+                }
+            });
+        });
+        
+        // Remove any injected style tags from InTheGame SDK
+        const styleTags = document.querySelectorAll('style[data-inthegame], style[data-flexi]');
+        styleTags.forEach(style => {
+            style.remove();
+            console.log('Removed InTheGame style tag');
+        });
+        
+        console.log('Cleanup completed');
+    } catch (error) {
+        console.error('Error during cleanup:', error);
+    }
+}
+
 function injectJSON() {
     try {
+        // Clean up any existing overlays before injecting new template
+        cleanupInTheGameOverlays();
+        
         // Always use the original JSON data, not the formatted output
         const stringifiedJson = JSON.stringify(window.jsonData);
         console.log('Attempting to inject JSON:', stringifiedJson);
