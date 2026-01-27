@@ -344,7 +344,7 @@ function copyToClipboard() {
 
 function initializeVideoPlayer() {
     const video = document.getElementById('video-player');
-    const videoSrc = 'https://2432eaf2dccf48859f8ea489fd5e0f8f.mediatailor.us-east-1.amazonaws.com/v1/master/7c8ce5ad5bcc5198ca301174a2ead89b25915ca4/stitchtest/index.m3u8';
+    const videoSrc = 'https://assets.inthegame.io/movies/bugsbunny.m3u8';
 
     // Initialize HLS player
     if (Hls.isSupported()) {
