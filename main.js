@@ -362,6 +362,7 @@ function initializeVideoPlayer() {
             videoPlayerId: "video-player",
             accountId: '6742d3571cc96f979c9bc1d5',
             clocksMode: 'manual',
+            device: 'web',
             adsMetadata: [{ time: 75, duration: 10 }],
             channelSlug: 'dpgtest'
         });
