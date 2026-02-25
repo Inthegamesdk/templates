@@ -12,5 +12,9 @@ window.clientTemplates = {
    Mobile_Web_overlay_banner: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_overlay.json',
    Mobile_Web_overlay_banner_positions_size: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_overlay_size_positions.json',
    Mobile_Web_Double_Box: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_double_box.json',
-   Mobile_Web_Pause_Ad_Side: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_pausead_side.json'
+   Mobile_Web_Double_Box_positions_size: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_double_box__positions_sizes.json',
+   Mobile_Web_Pause_Ad_Side: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_pausead_side.json',
+   Mobile_Web_Pause_Ad_Sidepositions_size: 'https://assets.internal.inthegame.io/templates/NowTV/nowtv_web_mobile_pausead_side_positions_sizes.json'
+
+
 };
